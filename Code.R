@@ -19,4 +19,16 @@ ages = c(pct_guardexit_agelt_1, pct_guardexit_age1_to_5,pct_guardexit_age6_to_10
 kg1.df <- kg1.df |>
   mutate(agelt_1_num = parse_number(pct_guardexit_agelt_1))
   
-mean(kg1.df$pct_guardexit_agelt_1, na.rm = TRUE)
+mean(kg1.df$agelt_1_num, na.rm = TRUE)
+
+kg1.df <- kg1.df |>
+  mutate(age1_to_5 = parse_number(pct_guardexit_age1_to_5),
+         age6_to_10 = parse_number(pct_guardexit_age6_to_10),
+         age11_to_15 = parse_number(pct_guardexit_age11_to_15),
+         age16_to_20 = parse_number(pct_guardexit_age16_to_20))
+  #select(agelt_1, 
+         #age1_to_5, 
+         #age6_to_10, 
+         #age11_to_15,
+         #age16_to_20)
+           
