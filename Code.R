@@ -22,7 +22,8 @@ kg1.df <- kg1.df |>
 mean(kg1.df$agelt_1_num, na.rm = TRUE)
 
 kg1.df <- kg1.df |>
-  mutate(age1_to_5 = parse_number(pct_guardexit_age1_to_5),
+  mutate(agelt_1 = parse_number(pct_guardexit_agelt_1),
+         age1_to_5 = parse_number(pct_guardexit_age1_to_5),
          age6_to_10 = parse_number(pct_guardexit_age6_to_10),
          age11_to_15 = parse_number(pct_guardexit_age11_to_15),
          age16_to_20 = parse_number(pct_guardexit_age16_to_20))
@@ -57,3 +58,11 @@ kg1a_filter.df <- kg1a_filter.df |>
          age11_to_15,
          age16_to_20)
 
+kg1_filter.df <- kg1_filter.df |>
+  select(state, state_abbrev,
+         agelt_1, 
+         age1_to_5, 
+         age6_to_10, 
+         age11_to_15,
+         age16_to_20)
+  
