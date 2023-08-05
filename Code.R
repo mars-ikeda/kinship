@@ -14,7 +14,7 @@ as.numeric(kg1.df$pct_guardexit_agelt_1) #attempt to convert to numeric produces
 
 # https://stackoverflow.com/questions/8329059/how-to-convert-character-of-percent-into-numeric-in-r
 
-ages = c(pct_guardexit_agelt_1, pct_guardexit_age1_to_5,pct_guardexit_age6_to_10,pct_guardexit_age11_to_15,pct_guardexit_age16_to_20) |>
+# ages = c(pct_guardexit_agelt_1, pct_guardexit_age1_to_5,pct_guardexit_age6_to_10,pct_guardexit_age11_to_15,pct_guardexit_age16_to_20) |>
 
 kg1.df <- kg1.df |>
   mutate(agelt_1_num = parse_number(pct_guardexit_agelt_1))
@@ -32,6 +32,31 @@ kg1.df <- kg1.df |>
          #age6_to_10, 
          #age11_to_15,
          #age16_to_20)
+
+kg_to_filter.df <- kg1.df |>
+  select(state, state_abbrev, has_kingap,
+          agelt_1, 
+          age1_to_5, 
+          age6_to_10, 
+          age11_to_15,
+          age16_to_20)
+
+kg_filtered <- kg_to_filter.df |>
+  group_by(has_kingap) |>
+  summarize(mean_lt_1 = mean(agelt_1),
+             mean1_to_5 = mean(age1_to_5),
+             mean6_to_10 = mean(age6_to_10),
+             mean11_to_15 = mean(age11_to_15),
+             mean16_to_20 = mean(age16_to_20)
+            )
+
+#  (summarise(mean_lt_1 = mean(agelt_1),
+#                      mean1_to_5 = mean(age1_to_5),
+#                      mean6_to_10 = mean(age6_to_10),
+#                      mean11_to_15 = mean(age11_to_15),
+#                      mean16_to_20 = mean(age16_to_20)
+#  )
+  
 
 kg1_filter.df <- kg1.df |>
   filter(has_kingap == "Yes") #filter works to filter for kingap
