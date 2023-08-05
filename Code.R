@@ -108,6 +108,34 @@ summary_no_kgap <- kg1a_filter.df |>
             mean11_to_15 = mean(age11_to_15),
             mean16_to_20 = mean(age16_to_20)
   )
+# GOV DATA IMPORT
+raw_GOV.df <- read.csv("/Users/marsikeda/Smith College/GOV 305f/Final Data project/fy2021-GAP-mei.csv")
 
+#need to eliminate rows x-x.1-x.42
+colnames(raw_GOV.df)
 
-  
+raw_GOV.df <- raw_GOV.df |>
+  select(state,
+         Effective.Date.of.Title.IV.E.GA.Plan,
+         Agency.GAP...Total.Computable..TC.,
+         Title.IV.E.GAP.Caseload,
+         Any.GAP..Title.IV.E...Non.IV.E..Caseload,
+         Title.IV.E.GAP.Participation.Rate)
+
+Gov.df <- raw_GOV.df |>
+  mutate(start = Effective.Date.of.Title.IV.E.GA.Plan,
+         total = Agency.GAP...Total.Computable..TC.,
+         caseload_IV_E = Title.IV.E.GAP.Caseload,
+         caseload_non_IV_E = Any.GAP..Title.IV.E...Non.IV.E..Caseload,
+         GAP_participation = Title.IV.E.GAP.Participation.Rate
+         ) |>
+  mutate(GAP_participation = parse_number(GAP_participation))
+
+Gov.df <- Gov.df |>
+  select(state,
+         total,
+         caseload_IV_E,
+         caseload_non_IV_E,
+         GAP_participation)
+
+Gov.df <- Gov.df[-(43:55),]
