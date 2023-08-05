@@ -111,7 +111,6 @@ summary_no_kgap <- kg1a_filter.df |>
 # GOV DATA IMPORT
 raw_GOV.df <- read.csv("/Users/marsikeda/Smith College/GOV 305f/Final Data project/fy2021-GAP-mei.csv")
 
-#need to eliminate rows x-x.1-x.42
 colnames(raw_GOV.df)
 
 raw_GOV.df <- raw_GOV.df |>
@@ -129,13 +128,40 @@ Gov.df <- raw_GOV.df |>
          caseload_non_IV_E = Any.GAP..Title.IV.E...Non.IV.E..Caseload,
          GAP_participation = Title.IV.E.GAP.Participation.Rate
          ) |>
-  mutate(GAP_participation = parse_number(GAP_participation))
+  mutate(GAP_participation = parse_number(GAP_participation)) #change percentage to numeric
 
 Gov.df <- Gov.df |>
   select(state,
+         start,
          total,
          caseload_IV_E,
          caseload_non_IV_E,
          GAP_participation)
 
-Gov.df <- Gov.df[-(43:55),]
+Gov.df <- Gov.df[-(43:55),] #delete rows that are blank and N/A
+
+#need to parse date in start
+
+Gov_parse.df <- Gov.df |>
+  mutate(start = parse_date(start, "%m/%d/%Y"))
+
+#GOV DATA EDA
+
+ggplot(Gov_parse_num.df, (aes(x = start, y = GAP_participation,
+                              size = caseload_IV_E))) +
+  geom_point() +
+  scale_size_area(max_size = 10)
+
+text(Gov_parse_num.df$start, Gov_parse_num.df$GAP_participation, labels = Gov_parse_num.df$state)
+
+text(df$x, df$y-1, labels=df$z)
+
+typeof(Gov_parse_num.df$caseload_IV_E)
+
+Gov_parse_num.df <- Gov_parse.df |>
+  mutate(total = parse_number(total),
+         caseload_IV_E = parse_number(caseload_IV_E),
+         caseload_non_IV_E = parse_number(caseload_non_IV_E)
+         )
+
+str(Gov_parse.df)
