@@ -65,4 +65,24 @@ kg1_filter.df <- kg1_filter.df |>
          age6_to_10, 
          age11_to_15,
          age16_to_20)
+
+# to do: Make the math math.
+
+summary_kgap <- kg1_filter.df |>
+  summarise(mean_lt_1 = mean(agelt_1),
+            mean1_to_5 = mean(age1_to_5),
+            mean6_to_10 = mean(age6_to_10),
+            mean11_to_15 = mean(age11_to_15),
+            mean16_to_20 = mean(age16_to_20)
+            )
+
+summary_no_kgap <- kg1a_filter.df |>
+  summarise(mean_lt_1 = mean(agelt_1),
+            mean1_to_5 = mean(age1_to_5),
+            mean6_to_10 = mean(age6_to_10),
+            mean11_to_15 = mean(age11_to_15),
+            mean16_to_20 = mean(age16_to_20)
+  )
+
+
   
