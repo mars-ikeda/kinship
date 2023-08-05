@@ -31,4 +31,8 @@ kg1.df <- kg1.df |>
          #age6_to_10, 
          #age11_to_15,
          #age16_to_20)
-           
+
+kg1_filter.df <- kg1.df |>
+  filter(has_kingap == "Yes") #filter works to filter for kingap
+
+#Note: US row is N/A re: Kingap. 
